@@ -18,6 +18,6 @@ public class Main {
             deck.add(deck.peek()); // 덱 맨 아래로 넣기
             deck.poll();
         }
-        System.out.println(deck.peek());
+        System.out.println(deck.poll());
     }
 }
