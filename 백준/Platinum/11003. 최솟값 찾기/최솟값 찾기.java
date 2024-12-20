@@ -1,43 +1,38 @@
 import java.io.*;
 import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken()); // 숫자의 개수
-        int l = Integer.parseInt(st.nextToken()); // 슬라이딩 윈도우의 크기
+        int n = Integer.parseInt(st.nextToken()); // 수의 개수
+        int l = Integer.parseInt(st.nextToken()); // 윈도우 크기
+        ArrayDeque<Node> window = new ArrayDeque<>();
         st = new StringTokenizer(br.readLine());
-        Deque<Node> slidingWindow = new ArrayDeque<>(); // 슬라이딩 윈도우
-        for (int i = 0; i < n; i++) {
-            // 넣는 요소가 바로 위의 요소보다 크면 last 에서 poll
-            int value = Integer.parseInt(st.nextToken());
-            while(!slidingWindow.isEmpty() && slidingWindow.peekLast().value > value){
-                slidingWindow.pollLast();
+        for(int i = 1; i <= n; i++){
+            int nextNode = Integer.parseInt(st.nextToken());
+            while(!window.isEmpty() && window.getLast().value >= nextNode) { // 윈도우의 last 쪽 요소가 들어가는 노드의 값보다 작아야 한다.
+                // 윈도우가 비어있지 않은 상태일 때 진행해야한다.
+                window.removeLast();
             }
 
-            // 요소 넣기
-            slidingWindow.add(new Node(i,value));
+            window.offer(new Node(i,nextNode));
 
-            // 만약 슬라이딩 윈도우의 범위를 벗어나면 first 에서 poll
-            if(slidingWindow.peekFirst().index <= i-l){
-                slidingWindow.pollFirst();
+            if (window.getLast().index - window.getFirst().index >= l) { // 윈도우의 크기를 초과하면 안되므로 앞 요소 삭제
+                window.removeFirst();
             }
 
-            bw.write(slidingWindow.peekFirst().value + " ");
+            bw.write(window.getFirst().value + " ");
         }
         bw.flush();
-        bw.close();
     }
 
-    static class Node{
+    private static class Node{
         int index;
         int value;
-        Node(int index,int value){
+        Node(int index, int value){
             this.index = index;
             this.value = value;
         }
