@@ -13,9 +13,9 @@ public class Main {
             arr[i] = i;
         }
 
-        for (int i = 2; i < n; i++) {
+        for (int i = 2; i < Math.sqrt(n); i++) { // n 의 제곱근 이상의 약수를 가질 수 없으므로
             if(arr[i]!=0){ // 지워지지 않은 수라면
-                for (int j = i+i; j <= Math.sqrt(n); j+=i) { // 해당 수의 배수 다 제거
+                for (int j = i+i; j <= n; j+=i) { // 해당 수의 배수 다 제거
                     arr[j] = 0;
                 }
             }
