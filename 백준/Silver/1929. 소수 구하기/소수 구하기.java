@@ -15,7 +15,7 @@ public class Main {
 
         for (int i = 2; i < n; i++) {
             if(arr[i]!=0){ // 지워지지 않은 수라면
-                for (int j = i+i; j <= n; j+=i) { // 해당 수의 배수 다 제거
+                for (int j = i+i; j <= Math.sqrt(n); j+=i) { // 해당 수의 배수 다 제거
                     arr[j] = 0;
                 }
             }
