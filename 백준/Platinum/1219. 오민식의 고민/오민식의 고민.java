@@ -30,7 +30,8 @@ public class Main {
 
         dist[startCity] = earns[startCity]; // 시작도시의 비용 설정
 
-        for(int i = 0;i<n+100;i++){ // n-1 번 하면 최적의 경로를 모두 구할 수 있음.
+        for(int i = 0;i<n+100;i++){ // n-1 번 하면 최적의 경로를 모두 구할 수 있음. 
+            // n의 범위가 50까지이기 때문에 충분한 반복을 통해서 양수 사이클 모두 찾기
             for(int j=0;j<m;j++){
                 Edge current = edges[j];
                 if(dist[current.start]==Integer.MIN_VALUE){
@@ -40,10 +41,10 @@ public class Main {
                 if(dist[current.end]<dist[current.start]+(earns[current.end]-current.cost)){
                     dist[current.end] = dist[current.start] + (earns[current.end] - current.cost);
                     if(i>=n-1){
-                        dist[current.end] = Integer.MAX_VALUE;
+                        dist[current.end] = Integer.MAX_VALUE; // 양수 사이클 저장
                     }
                 }else if(dist[current.start]==Integer.MAX_VALUE){
-                    dist[current.end] = Integer.MAX_VALUE;
+                    dist[current.end] = Integer.MAX_VALUE; // 양수 사이클은 전파된다.
                 }
             }
         }
