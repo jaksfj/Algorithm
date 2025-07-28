@@ -1,23 +1,24 @@
-import java.util.*;
+
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        Queue<Integer> deck = new ArrayDeque<>();
-        int deckSize = sc.nextInt();
-        // 덱 초기화
-        for (int i = 0; i < deckSize; i++) {
-            deck.add(i+1);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        Deque<Integer> dq = new ArrayDeque<>();
+        for (int i = 1; i <= n; i++) {
+            dq.add(i);
         }
-
-        while(deck.size()>1){
-            deck.poll(); // 가장 위에 있는 카드 버리기
-            if(deck.size()==1){
-                break;
-            }
-            deck.add(deck.peek()); // 덱 맨 아래로 넣기
-            deck.poll();
+        while(dq.size()>1){
+            dq.remove();
+            Integer first = dq.poll();
+            dq.addLast(first);
         }
-        System.out.println(deck.poll());
+        System.out.println(dq.poll());
     }
 }
