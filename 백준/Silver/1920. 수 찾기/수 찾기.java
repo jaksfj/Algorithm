@@ -1,42 +1,61 @@
-import java.io.*;
-import java.util.*;
 
-public class Main {
-    static boolean isExist;
-    public static void main(String[] args) throws IOException { // 이진탐색
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main { // 수 찾기
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        int[] arr = new int[n];
+        int[] a = new int[n];
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
+            a[i] = Integer.parseInt(st.nextToken());
+        }
+        int m = Integer.parseInt(br.readLine());
+        int[] b = new int[m];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < m; i++) {
+            b[i] = Integer.parseInt(st.nextToken());
+        }
+        int[] result = new int[m];
+
+        // a 배열 탐색 전 정렬 : 이분탐색 위해서
+        Arrays.sort(a);
+
+        // 제한시간 1초이고 입력 10만이므로 복잡도 nlogn -> 이분탐색
+        for (int i = 0; i < m; i++) {
+            if(divideSearch(a,b[i],0,n-1)){
+                result[i] = 1;
+            }else{
+                result[i] = 0;
+            }
         }
 
-        Arrays.sort(arr); // 이진 탐색은 정렬된 배열에서 수행함
-
-        int m = Integer.parseInt(br.readLine());
-        st = new StringTokenizer(br.readLine()); // 찾을 숫자들
         for (int i = 0; i < m; i++) {
-            int target = Integer.parseInt(st.nextToken());
-            isExist = false;
-            binarySearch(arr,0,n-1,target);
-            System.out.println(isExist ? 1 : 0);
+            if(result[i]==1) {
+                System.out.println(1);
+            }else{
+                System.out.println(0);
+            }
         }
     }
 
-    private static void binarySearch(int[] arr,int start,int end,int target){
+    static boolean divideSearch(int[] arr,int num,int start,int end){
         if(start>end){
-            return;
+            return false;
         }
-        int mid = (start + end) / 2;
-
-        if(target==arr[mid]){
-            isExist = true;
-        } else if(target<arr[mid]){ // 왼쪽 부분 탐색
-            binarySearch(arr,start,mid-1,target);
-        } else if(target>arr[mid]){ // 오른쪽 부분 탐색
-            binarySearch(arr,mid+1,end,target);
+        int mid = (start+end)/2;
+        int midValue = arr[mid];
+        if(midValue == num){
+            return true;
+        }else if(midValue<num){
+            return divideSearch(arr,num,mid+1,end);
+        }else{
+            return divideSearch(arr,num,start,mid-1);
         }
-        return;
     }
 }
