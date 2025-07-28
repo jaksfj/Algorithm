@@ -1,5 +1,4 @@
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,7 +25,7 @@ public class Main { // 수 찾기
         // a 배열 탐색 전 정렬 : 이분탐색 위해서
         Arrays.sort(a);
 
-        // 제한시간 1초이고 입력 10만이므로 복잡도 nlogn -> 이분탐색
+        // 제한시간 1초이고 입력 10만이므로 복잡도 logn -> 이분탐색
         for (int i = 0; i < m; i++) {
             if(divideSearch(a,b[i],0,n-1)){
                 result[i] = 1;
