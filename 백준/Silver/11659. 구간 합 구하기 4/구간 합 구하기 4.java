@@ -1,34 +1,34 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
+
+import java.io.*;
 import java.util.StringTokenizer;
 
-public class Main {
+public class Main { // 구간 합 구하기
     public static void main(String[] args) throws IOException {
-         int n,m;
-         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-         StringTokenizer st = new StringTokenizer(br.readLine());
-         n = Integer.parseInt(st.nextToken()); // 숫자 배열의 크기
-         m = Integer.parseInt(st.nextToken()); // 질의 개수
-         int[] numArr = new int[n+1];
-         st = new StringTokenizer(br.readLine());
-
-         // 숫자 배열 생성
-         for (int i = 1; i < n+1; i++) {
-             numArr[i] = Integer.parseInt(st.nextToken());
-         }
-
-         int[] sumArr = new int[n+1];
-         // 합 배열 생성
-         for (int i = 1; i < n+1; i++) {
-             sumArr[i] = sumArr[i-1] + numArr[i];
-         }
-
-         for (int k = 1; k < m+1; k++) {
-             st = new StringTokenizer(br.readLine());
-             int i = Integer.parseInt(st.nextToken()); // 시작점
-             int j = Integer.parseInt(st.nextToken()); // 끝점
-             System.out.println(sumArr[j] - sumArr[i-1]);
-         }
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        int[] arr = new int[n];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+        // 합배열 만들기
+        int[] sum = new int[n+1];
+        for (int i = 1; i <= n; i++) {
+            sum[i] = arr[i - 1] + sum[i - 1];
+        }
+        // 구간합 구하기
+        for (int k = 0; k < m; k++) {
+            st = new StringTokenizer(br.readLine());
+            int i = Integer.parseInt(st.nextToken());
+            int j = Integer.parseInt(st.nextToken());
+            bw.write(sum[j]-sum[i-1]+"\n");
+        }
+        bw.flush();
+        bw.close();
+        br.close();
     }
 }
