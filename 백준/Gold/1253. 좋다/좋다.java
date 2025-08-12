@@ -7,36 +7,34 @@ import java.util.StringTokenizer;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int numCnt = Integer.parseInt(br.readLine());
+        int n = Integer.parseInt(br.readLine());
+        int[] arr = new int[n];
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int[] numArr = new int[numCnt];
-
-        for (int i = 0; i < numCnt; i++) {
-            numArr[i] = Integer.parseInt(st.nextToken());
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        Arrays.sort(numArr);  // 숫자 배열 정렬
+        Arrays.sort(arr); // 배열 정렬
 
         int cnt = 0;
-        for (int i = 0; i < numCnt; i++) {
-            int startPointer = 0;
-            int endPointer = numCnt-1;
-            int target = numArr[i];
-            while(startPointer<endPointer){
-                int sum = numArr[startPointer] + numArr[endPointer];
-                if(sum > target){
-                    endPointer--;
-                }else if(sum < target) {
-                    startPointer++;
-                }else { // sum == target
-                    if(startPointer!=i && endPointer!=i){ // 포인터들은 target 이 되면 안됨!! (서로 다른 target 이 아닌 수)
+        for (int i = 0; i < n; i++) {
+            int start = 0;
+            int end = n-1;
+            while(start<end) {
+                int sum = arr[start] + arr[end];
+                if (sum == arr[i]){
+                    if(start != i && end != i) { // 세 수는 서로 다른 수여야 함 : 좋은 수 조건
                         cnt++;
                         break;
-                    }else if(startPointer==i){ // 포인터가 target 자체면 안되기 때문에
-                        startPointer++; // 더 큰 수 범위에서 찾아야 함
-                    }else if(endPointer==i){
-                        endPointer--; // 더 작은 수 범위에서 찾아야 함
+                    }else if(start == i){ // start 포인터가 i 라면 더 큰 범위에서 찾기
+                        start++;
+                    }else { // end 포인터가 i 라면 더 작은 범위에서 찾기
+                        end--;
                     }
+                }else if(sum > arr[i]){
+                    end--;
+                }else{
+                    start++;
                 }
             }
         }
