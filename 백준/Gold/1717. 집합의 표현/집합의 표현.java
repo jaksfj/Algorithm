@@ -1,55 +1,56 @@
+
+
 import java.io.*;
-import java.util.*;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) throws IOException { // 유니온 파인드
+    static int[] arr;
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken()); // 최대 숫자
-        int m = Integer.parseInt(st.nextToken()); // 연산 횟수
-        int[] parents = new int[n+1];
-
-        // 대표노드 배열 설정
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        arr = new int[n+1];
+        // 자기 자신의 인덱스를 대표노드로 설정
         for (int i = 1; i <= n; i++) {
-            parents[i] = i; // 자기 자신을 대표노드로 설정
+            arr[i] = i;
         }
-
-        for (int i = 1; i <= m; i++) {
+        for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
-            int uf = Integer.parseInt(st.nextToken()); // union or find
-            int n1 = Integer.parseInt(st.nextToken());
-            int n2 = Integer.parseInt(st.nextToken());
-            if(uf==0){ // union 연산
-                union(parents,n1,n2);
-            }else{ // 서로 같은 집합인지 확인하는 연산
-                isSame(parents,n1,n2);
+            int select = Integer.parseInt(st.nextToken());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            if(select==0){ // union : 집합 합치기
+                union(a,b);
+            }else{ // find : 대표노드 찾아서 서로 같은 대표노드인지 확인하기
+                if(find(a)==find(b)){
+                    bw.write("YES" + "\n");
+                }else{
+                    bw.write("NO" + "\n");
+                }
             }
         }
+        bw.flush();
+        bw.close();
+        br.close();
     }
 
-    private static void union(int[] parents,int n1,int n2){
-        int parent1 = find(parents,n1);
-        int parent2 = find(parents,n2);
-        int parentNode = Math.min(parent1, parent2); // 더 작은 숫자가 더 높은 대표숫자임
-        // 대표노드끼리 연결
-        parents[parent1] = parentNode;
-        parents[parent2] = parentNode;
-    }
-
-    private static int find(int[] parents,int n){
-        if(parents[n]!=n){ // 대표 노드랑 같지 않다면
-            parents[n] = find(parents,parents[n]); // 지나치는 노드들 대표노드 값으로 설정하기!
-        }
-        return parents[n];
-    }
-
-    private static void isSame(int[] parents,int n1,int n2){
-        int first = find(parents,n1);
-        int second = find(parents,n2);
-        if(first==second){
-            System.out.println("YES");
+    static int find(int num){ // 대표 노드 찾기
+        if(num==arr[num]){
+            return num;
         }else{
-            System.out.println("NO");
+            return arr[num] = find(arr[num]);
+        }
+    }
+
+    static void union(int n1,int n2) {
+        int a = find(n1);
+        int b = find(n2);
+        if(a<b){
+            arr[b] = a;
+        }else{
+            arr[a] = b;
         }
     }
 }
