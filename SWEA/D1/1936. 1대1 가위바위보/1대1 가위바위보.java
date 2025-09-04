@@ -56,32 +56,17 @@ class Solution
 		*/
         /*
         	가위1 바위2 보3
-            1 2 -> 2
-            1 3 -> 1
-            2 3 -> 3
+            1 2 -> 2 (b)
+            1 3 -> 1 (a)
+            2 3 -> 3 (b)
+            2 1 -> 2 (a)
+            3 1 -> 1 (b)
+            3 2 -> 3 (a)
         */
         int a = Integer.parseInt(st.nextToken());
         int b = Integer.parseInt(st.nextToken());
         char win;
-        if(a==1){
-        	if(b==2){
-            	win = 'B';
-            }else{ // b=3
-            	win = 'A';
-            }
-        }else if(a==2){
-        	if(b==1){
-            	win = 'A';
-            }else{ // b=3
-            	win = 'B';
-            }
-        }else{ // a = 3
-        	if(b==1){
-            	win='B';
-            }else{ // b=2
-            	win = 'A';
-            }
-        }
-        System.out.println(win);
+        int diff = a-b;
+        System.out.println(((diff)%3==1)?'A' : 'B');
 	}
 }
