@@ -59,7 +59,6 @@ class Solution
 			int n = sc.nextInt();
             System.out.println("#" + test_case);
             int[][] arr = new int[n][n]; // nxn 배열 생성
-            boolean[][] visited = new boolean[n][n]; // 방문배열 생성
             int index = 1;
             int x = 0; // 가로
             int y = 0; // 세로
@@ -67,46 +66,41 @@ class Solution
             for(int i = 0;i<n;i++){
             	for(int j = 0;j<n;j++){
                 	arr[i][j] = 0;
-                    visited[i][j] = false;
                 }
             }
             while(index<=n*n){
             	// 왼 -> 오
                	for(int i = x;i<n;i++){
-               		if(visited[y][i]){
+               		if(arr[y][i]!=0){
                     	continue;
                     }
-                    visited[y][i] = true;
                     arr[y][i] = index;
                     index++;
                     x = i;
                 }
                 // 위 -> 아래
                 for(int i = y+1;i<n;i++){
-                	if(visited[i][x]){
+                	if(arr[i][x]!=0){
                         continue;
                     }
-                    visited[i][x] = true;
                     arr[i][x] = index;
                     index++;
                     y = i;
                 }
                 // 오 -> 왼
                 for(int i = x-1;i>=0;i--){
-                	if(visited[y][i]){
+                	if(arr[y][i]!=0){
                         continue;
                     }
-                    visited[y][i] = true;
                     arr[y][i] = index;
                     index++;
                     x= i;
                 }
                 // 아래 -> 위
                 for(int i = y-1;i>=0;i--){
-                	if(visited[i][x]){
+                	if(arr[i][x]!=0){
                         continue;
                     }
-                    visited[i][x] = true;
                     arr[i][x] = index;
                     index++;
                     y = i;
