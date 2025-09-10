@@ -69,19 +69,21 @@ class Solution
                 int count = Integer.parseInt(st.nextToken());
                 arr[(int)c-65] = count;
             }
+            StringBuilder sb = new StringBuilder();
             int cnt = 0;
             for(int i = 0;i<26;i++){
                 if(arr[i]!=0){
             		for(int j = 0;j<arr[i];j++){
-                		System.out.print((char)(i+65));
+                		sb.append((char)(i+65));
                         cnt++;
                         if(cnt%10==0){
-                        	System.out.printf("\n");
+                        	sb.append("\n");
                         }
                 	}
                 }
             }
-            System.out.println();
+           sb.append("\n");
+            System.out.print(sb);
 		}
 	}
 }
