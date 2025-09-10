@@ -54,61 +54,44 @@ class Solution
 		/*
 		   여러 개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
 		*/
+         // 오 -> 아래 -> 왼 -> 위
+        int[] dx = {1,0,-1,0};
+        int[] dy = {0,1,0,-1};
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
 			int n = sc.nextInt();
             System.out.println("#" + test_case);
             int[][] arr = new int[n][n]; // nxn 배열 생성
             int index = 1;
-            int x = 0; // 가로
-            int y = 0; // 세로
             // 배열 초기화
             for(int i = 0;i<n;i++){
             	for(int j = 0;j<n;j++){
                 	arr[i][j] = 0;
                 }
             }
-            while(index<=n*n){
-            	// 왼 -> 오
-               	for(int i = x;i<n;i++){
-               		if(arr[y][i]!=0){
-                    	continue;
-                    }
-                    arr[y][i] = index;
-                    index++;
-                    x = i;
+            
+            int x = 0;
+            int y = 0;
+            int dir = 0; // 방향 인덱스
+            for(int i = 1;i<=n*n;i++){
+                arr[y][x] = i;
+                // 미리 좌표 계산
+            	int nx = x + dx[dir];
+                int ny = y + dy[dir];
+                
+                // 만약 조건에 미치지 못하면 방향 전환 : 범위 초과, 이미 방문한 곳 제외
+                if(nx<0 || ny <0 || nx>=n || ny>=n || arr[ny][nx] !=0){
+                	dir = (dir + 1) % 4;
+                    // 방향 전환한 후 다시 nx ny 값 갱신
+                    nx = x + dx[dir];
+                    ny = y + dy[dir];
                 }
-                // 위 -> 아래
-                for(int i = y+1;i<n;i++){
-                	if(arr[i][x]!=0){
-                        continue;
-                    }
-                    arr[i][x] = index;
-                    index++;
-                    y = i;
-                }
-                // 오 -> 왼
-                for(int i = x-1;i>=0;i--){
-                	if(arr[y][i]!=0){
-                        continue;
-                    }
-                    arr[y][i] = index;
-                    index++;
-                    x= i;
-                }
-                // 아래 -> 위
-                for(int i = y-1;i>=0;i--){
-                	if(arr[i][x]!=0){
-                        continue;
-                    }
-                    arr[i][x] = index;
-                    index++;
-                    y = i;
-                }       
+                x = nx;
+                y = ny;
             }
             for(int i = 0;i<n;i++){
-                for(int j = 0;j<n;j++){
-            		System.out.print(arr[i][j] + " ");
+            	for(int j = 0;j<n;j++){
+                	System.out.print(arr[i][j] + " ");
                 }
                 System.out.println();
             }
