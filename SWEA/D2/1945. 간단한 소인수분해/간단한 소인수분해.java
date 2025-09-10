@@ -45,15 +45,12 @@ class Solution
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
             int[] answer = new int[5];
-        	for(int i = 0;i<5;i++){
-        		answer[i] = 0; 
-        	}	
 			int n = sc.nextInt();
             for(int i = 0;i<5;i++){
                 if(n==0){
                 	break;
                 }
-            	while(n%numbers[i]==0 && n!=0){
+            	while(n%numbers[i]==0){
                     n/=numbers[i]; // n값 갱신
                     answer[i]++;
                 }
