@@ -47,12 +47,12 @@ class Solution
             int speed = 0; // 가속도
             int distance = 0; // 거리
             for(int i = 0;i<n;i++){
-                int option = Integer.parseInt(sc.next()); // 가속 or 감속 or 그대로
+                int option = sc.nextInt(); // 가속 or 감속 or 그대로
                 if(option==0){
                 	distance += speed;
                     continue;
                 }
-                int onSpeed = Integer.parseInt(sc.next()); // 속도 변환 변수
+                int onSpeed = sc.nextInt(); // 속도 변환 변수
                 if(option==1){
                     speed += onSpeed;
                 }else if(option==2){
