@@ -59,31 +59,21 @@ class Solution
             System.out.println("#" + test_case);
 			int n = sc.nextInt();
             sc.nextLine();
-            int[] arr = new int[26]; // A~Z 배열
-           for(int i = 0;i<26;i++){
-                arr[i] = 0;
-            }
+            int bufferSize = 0;
+            StringBuilder sb = new StringBuilder();
             for(int i = 0;i<n;i++){
                 st = new StringTokenizer(sc.nextLine());
-            	char c = (st.nextToken()).charAt(0);
+            	String c = st.nextToken();
                 int count = Integer.parseInt(st.nextToken());
-                arr[(int)c-65] = count;
-            }
-            StringBuilder sb = new StringBuilder();
-            int cnt = 0;
-            for(int i = 0;i<26;i++){
-                if(arr[i]!=0){
-            		for(int j = 0;j<arr[i];j++){
-                		sb.append((char)(i+65));
-                        cnt++;
-                        if(cnt%10==0){
-                        	sb.append("\n");
-                        }
-                	}
+               	for(int j = 0;j<count;j++){
+                	sb.append(c);
+                  	bufferSize++;
+                    if(bufferSize%10==0){
+                    	sb.append("\n");
+                    }
                 }
             }
-           sb.append("\n");
-            System.out.print(sb);
-		}
+            System.out.println(sb);
+        }
 	}
 }
