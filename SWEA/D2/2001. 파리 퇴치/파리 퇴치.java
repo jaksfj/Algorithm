@@ -59,33 +59,36 @@ class Solution
 		*/
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
-			int sum;
          	st = new StringTokenizer(sc.nextLine());
             int n = Integer.parseInt(st.nextToken());
             int m = Integer.parseInt(st.nextToken());
-            int[][] arr = new int[n][n];
+            int[][] arr = new int[n+1][n+1];
+            int[][] sum = new int[n+1][n+1];
             int max = 0;
-            for(int i = 0;i<n;i++){
+            for(int i = 1;i<=n;i++){
             	st = new StringTokenizer(sc.nextLine());
-                for(int j = 0;j<n;j++){
+                for(int j = 1;j<=n;j++){
                 	arr[i][j] = Integer.parseInt(st.nextToken());
                 }
             }
+            // 합배열 만들기
+           for(int i = 1;i<=n;i++){
+           		for(int j = 1;j<=n;j++){
+                	 sum[i][j] = sum[i][j-1] + sum[i-1][j] +arr[i][j] - sum[i-1][j-1];
+                }
+           }
+           
             
-            for(int i = 0;i<=n-m;i++){ // 세로
-            	for(int j = 0;j<=n-m;j++){ // 가로
-                    sum = 0;
-                    for(int k = i;k<i+m;k++){
-                    	for(int h = j;h<j+m;h++){
-                        	sum += arr[k][h];
-                        }
-                    }
-                    if(max<sum){
-                    	max = sum;
+            // mxm 만큼 탐색하면서 최댓값 찾기
+            for(int i = m;i<=n;i++){
+            	for(int j = m;j<=n;j++){
+                   	int sumNum = sum[i][j]-sum[i-m][j]-sum[i][j-m]+sum[i-m][j-m];
+                	if(max<sumNum){
+                    	max = sumNum;
                     }
                 }
             }
-            System.out.println("#" + test_case + " " + max);
+           System.out.println("#" + test_case + " " + max);
 		}
 	}
 }
