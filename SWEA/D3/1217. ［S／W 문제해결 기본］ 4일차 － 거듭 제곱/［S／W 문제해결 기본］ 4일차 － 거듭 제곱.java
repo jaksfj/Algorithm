@@ -11,13 +11,14 @@ class Solution
 			int n = sc.nextInt();
             int num = sc.nextInt();
             int pow = sc.nextInt();
-            int cnt = 1;
-            int answer = 1;
-            while(cnt<=pow){
-            	answer *= num;
-                cnt++;
-            }
-            System.out.println("#" + test_case + " " + answer);
+            System.out.println("#" + test_case + " " + power(num,pow));
 		}
 	}
+    
+    static int power(int num,int pow){
+    	if(pow==0){
+            return 1;
+        }
+        return num * power(num,pow-1);
+    }
 }
