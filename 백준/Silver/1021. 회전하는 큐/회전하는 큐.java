@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class Main {
     static Deque<Integer> deque;
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
@@ -16,32 +15,33 @@ public class Main {
         int answer = 0;
         for (int i = 0; i < m; i++) {
             int find = sc.nextInt();
-            Deque<Integer> tmp1 = new ArrayDeque<>(deque);
-            Deque<Integer> tmp2 = new ArrayDeque<>(deque);
-            int cnt2 = 0;
-            int cnt3 = 0;
-            if(!deque.isEmpty() && deque.getFirst()==find){
+            int index = 0;
+            for (int value : deque) { // 해당 find 의 인덱스 위치 찾기
+                if(find==value){
+                    break;
+                }
+                index++;
+            }
+            if(index==0){
+                deque.pollFirst();
+            }else if(index<(deque.size()-index)){ // 0 인덱스부터 해당 인덱스까지 거리가 더 짧으면
+                int cnt = 0;
+                while(deque.getFirst()!=find){
+                    int val = deque.pollFirst();
+                    deque.offerLast(val);
+                    cnt++;
+                }
                 deque.poll();
-                continue;
-            }
-            while(tmp1.getFirst()!=find){
-                int val = tmp1.pollFirst();
-                tmp1.offerLast(val);
-                cnt2++;
-            }
-            tmp1.poll();
-            while(tmp2.getFirst()!=find){
-                int val = tmp2.pollLast();
-                tmp2.offerFirst(val);
-                cnt3++;
-            }
-            tmp2.poll();
-            if(cnt2>cnt3){
-                deque = tmp2;
-                answer += cnt3;
-            }else{
-                deque = tmp1;
-                answer += cnt2;
+                answer += cnt;
+            }else{ // 끝 인덱스부터 인덱스까지의 거리가 더 짧으면
+                int cnt = 0;
+                while(deque.getFirst()!=find){ 
+                    int val = deque.pollLast();
+                    deque.offerFirst(val);
+                    cnt++;
+                }
+                deque.poll();
+                answer += cnt;
             }
         }
         System.out.println(answer);
