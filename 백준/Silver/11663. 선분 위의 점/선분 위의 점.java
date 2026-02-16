@@ -18,9 +18,8 @@ public class Main {
         for (int i = 0; i < m; i++) {
             long start = sc.nextInt();
             long end = sc.nextInt();
-
-            int left = findFirst(start); // start 혹은 가장 가까운 오른쪽 인덱스
-            int right = findLast(end); // end 혹은 가장 가까운 왼쪽 인덱스
+            int left = findFirst(start); // start 이상 첫 위치
+            int right = findLast(end); // end 초과 첫 위치
             System.out.println(right-left);
         }
     }
@@ -29,6 +28,7 @@ public class Main {
         int end = arr.length;
         while(start<end){
             int mid = (start+end)/2;
+            // start 이상값을 찾아야 되므로 
             if(target<=arr[mid]){
                 end = mid;
             }else{
@@ -42,6 +42,7 @@ public class Main {
         int end = arr.length;
         while(start<end){
             int mid = (start+end)/2;
+            // end 초과값을 찾아야 하므로
             if(arr[mid]<=target){
                 start = mid+1;
             }else{
