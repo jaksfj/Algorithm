@@ -9,14 +9,12 @@ public class Main {
     static char[][] board;
     static int[] dx = {-1,1,0,0};
     static int[] dy = {0,0,-1,1};
-    static Set<Character> set = new HashSet<>();
-    static boolean[][] visited;
+    static boolean[] alphabets = new boolean[26];
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         r = sc.nextInt();
         c = sc.nextInt();
         board = new char[r][c];
-        visited = new boolean[r][c];
         for (int i = 0; i < r; i++) {
             board[i] = sc.next().toCharArray();
         }
@@ -25,16 +23,14 @@ public class Main {
     }
     static void dfs(int x,int y,int distance){
         max = Math.max(distance,max);
-        visited[x][y] = true;
-        set.add(board[x][y]);
+        alphabets[board[x][y]-'A'] = true;
         for (int i = 0; i < 4; i++) {
             int ix = x + dx[i];
             int iy = y + dy[i];
-            if(ix>=0 && iy>=0 && ix<r && iy<c && !(visited[ix][iy]) && (!set.contains(board[ix][iy]))){
+            if(ix>=0 && iy>=0 && ix<r && iy<c && (!alphabets[board[ix][iy]-'A'])){
                 dfs(ix,iy,distance+1);
             }
         }
-        visited[x][y] = false;
-        set.remove(board[x][y]);
+        alphabets[board[x][y]-'A'] = false;
     }
 }
