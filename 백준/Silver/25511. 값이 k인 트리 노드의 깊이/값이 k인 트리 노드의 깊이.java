@@ -30,12 +30,6 @@ public class Main {
             nodeValue[i] = sc.nextInt();
         }
         bfs(0);
-        for (int i = 0; i < n; i++) {
-            if(nodeValue[i]==k){
-                System.out.println(depth[i]);
-                break;
-            }
-        }
     }
 
     static void bfs(int startNode){
@@ -44,6 +38,10 @@ public class Main {
         visited[startNode] = true;
         while(!queue.isEmpty()){
             int cur = queue.poll();
+            if(nodeValue[cur]==k){
+                System.out.println(depth[cur]);
+                return;
+            }
             for(int next : list[cur]){
                 if(!visited[next]){
                     queue.offer(next);
