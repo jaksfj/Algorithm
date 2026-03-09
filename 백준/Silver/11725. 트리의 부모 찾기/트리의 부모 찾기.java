@@ -1,44 +1,45 @@
-import java.io.*;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        ArrayList<Integer>[] list = new ArrayList[n+1];
-        StringTokenizer st;
-        boolean[] visited = new boolean[n+1];
-        int[] parents = new int[n+1]; // 부모노드를 찾기위한 배열
-        for(int i = 1;i<=n;i++){
+    static boolean[] visited;
+    static ArrayList<Integer>[] list;
+    static int[] parent;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        list = new ArrayList[n+1];
+        visited = new boolean[n+1];
+        parent = new int[n+1];
+        for (int i = 1; i <= n; i++) {
             list[i] = new ArrayList<>();
         }
-
-        for(int i = 0;i<n-1;i++){
-            st = new StringTokenizer(br.readLine());
-            int start = Integer.parseInt(st.nextToken());
-            int end = Integer.parseInt(st.nextToken());
-            list[start].add(end);
-            list[end].add(start);
+        for (int i = 0; i < n-1; i++) {
+            int n1 = sc.nextInt();
+            int n2 = sc.nextInt();
+            list[n1].add(n2);
+            list[n2].add(n1);
         }
-
-        dfs(list,parents,1, visited);
-
-        for(int i = 2;i<=n;i++){
-            System.out.println(parents[i]);
+        bfs(1);
+        for (int i = 2; i <= n; i++) {
+            System.out.println(parent[i]);
         }
     }
 
-    private static void dfs(ArrayList<Integer>[] list,int[] parents,int node,boolean[] visited){
-        if(visited[node]){
-            return;
-        }
-
-        visited[node] = true;
-
-        for(int next : list[node]){
-            if(!visited[next]){
-                parents[next] = node;
-                dfs(list,parents,next,visited);
+    static void bfs(int startNode){
+        Queue<Integer> queue = new ArrayDeque<>();
+        queue.offer(startNode);
+        visited[startNode] = true;
+        while(!queue.isEmpty()){
+            int cur = queue.poll();
+            visited[cur]=true;
+            for(int next : list[cur]){
+                if(!visited[next]){
+                    queue.offer(next);
+                    parent[next] = cur;
+                }
             }
         }
     }
