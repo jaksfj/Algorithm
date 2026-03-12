@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class Main {
@@ -14,40 +15,33 @@ public class Main {
                 arr[i][j] = sc.nextInt();
             }
         }
-        getCnt(1,n,0);
+        getCnt(1,1,n);
         System.out.println(whiteCnt);
         System.out.println(blueCnt);
     }
-    static void getCnt(int start,int end, int yAdd){
-        if(start==end){
-            if(arr[start][start+yAdd]==1){
-                blueCnt++;
-            }else{
-                whiteCnt++;
-            }
-            return;
-        }
-        int mid = (start+end)/2;
+    static void getCnt(int x,int y, int size){
         int cnt = 0;
-        for (int i = start; i <= end; i++) {
-            for (int j = start+yAdd; j <= end+yAdd; j++) {
-                cnt+=arr[i][j];
+
+        for (int i = x; i < x+size; i++) {
+            for (int j = y; j < y+size; j++) {
+                cnt += arr[i][j];
             }
         }
-        if(cnt==0) {
-            // 만약 0이면 whiteCnt 증가
+
+        if(cnt==0){
             whiteCnt++;
             return;
-        }else if(cnt==(int)Math.pow(end-start+1,2)){
-            // 만약 n*n 이면 blueCnt 증가
+        }else if(cnt==(size*size)){
             blueCnt++;
             return;
         }
-        int half = mid-start+1;
-        // 아니면 쪼개기
-        getCnt(start, mid, yAdd); // 좌상
-        getCnt(start, mid, yAdd + half); // 우상
-        getCnt(mid+1, end, yAdd - half); // 좌하
-        getCnt(mid+1, end, yAdd); // 우하
+
+        int half = (size/2);
+
+        // 사분면 분할
+        getCnt(x,y,half); // 좌상
+        getCnt(x,y+half,half); // 우상
+        getCnt(x+half,y,half); // 좌하
+        getCnt(x+half,y+half,half); // 우하
     }
 }
