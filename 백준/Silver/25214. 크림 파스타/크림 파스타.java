@@ -26,7 +26,7 @@ public class Main {
 			if(num<min) { // 최소값 갱신
 				min = num;
 			}
-			dp[index] = Math.max(dp[index-1], Math.abs(num-min));
+			dp[index] = Math.max(dp[index-1], num-min);
 			bw.write(dp[index] + " ");
 			index++;
 		}
