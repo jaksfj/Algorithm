@@ -25,8 +25,9 @@
 //System.out.println(var);		       				   // 문자열 1개 출력하는 예제
 //System.out.println(AB);		       				     // long 변수 1개 출력하는 예제
 /////////////////////////////////////////////////////////////////////////////////////////////
-import java.util.Scanner;
-import java.io.FileInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 /*
@@ -39,46 +40,33 @@ class Solution
 	static int[] calories;
 	static int maxCal, cnt, answer;
     
-	public static void main(String args[]) throws Exception
-	{
-		Scanner sc = new Scanner(System.in);
-		int T;
-		T=sc.nextInt();
-        StringTokenizer st;
-        sc.nextLine();
-		for(int test_case = 1; test_case <= T; test_case++)
-		{
-			st = new StringTokenizer(sc.nextLine());
-            cnt = Integer.parseInt(st.nextToken()); // 재료 수
-            maxCal = Integer.parseInt(st.nextToken()); // 전체 칼로리 수
-            answer = 0; // 정답 점수
-			scores = new int[cnt];
-			calories = new int[cnt];
-            for(int i = 0;i<cnt;i++){
-				st = new StringTokenizer(sc.nextLine());
-            	scores[i] = Integer.parseInt(st.nextToken());
-                calories[i] = Integer.parseInt(st.nextToken());
-            }
-            dfs(0,0,0);
-            System.out.println("#" + test_case + " " + answer);
-        }
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int t = Integer.parseInt(br.readLine());
+		StringTokenizer st;
+		for(int i = 1;i<=t;i++) {
+			int maxCalorie = 0;
+			st = new StringTokenizer(br.readLine());
+			int N = Integer.parseInt(st.nextToken()); // 재료 수 
+			int L = Integer.parseInt(st.nextToken()); // 제한 칼로리
+			int[] scores = new int[N];
+			int[] calories = new int[N];
+			for(int j = 0; j<N;j++) {
+				st = new StringTokenizer(br.readLine());
+				int score = Integer.parseInt(st.nextToken()); // 맛 점수
+				int calorie = Integer.parseInt(st.nextToken()); // 칼로리
+				scores[j] = score;
+				calories[j] = calorie;
+			}
+			int[] dp = new int[L+1]; // 최대 칼로리를 담는 dp 배열
+			for(int j = 0;j<N;j++) {
+				int score = scores[j]; // 맛 점수
+				int calorie = calories[j]; // 칼로리
+				for(int k = L;k>=calorie;k--) {
+					dp[k] = Math.max(dp[k], dp[k-calorie]+score);
+				}
+			}
+			System.out.println("#" + i + " " + dp[L]);
+		}
 	}
-    
-    static void dfs(int index,int totalCal, int totalScore){ // 인덱스, 칼로리합, 점수합
-    	if(totalCal>maxCal){ // 최대 칼로리보다 넘어가면 탐색 중단
-        	return;
-        }
-        
-         // 현재까지의 점수가 최대 점수보다 크면 점수 갱신
-        if(answer<totalScore){
-        	answer = totalScore;
-        } 
-        
-        if(index==cnt){ // 모두 탐색했으므로 탐색 중단
-            return;
-        }
-       
-        dfs(index+1,totalCal,totalScore); // 이번 재료 미선택
-        dfs(index+1,totalCal+calories[index],totalScore+scores[index]); // 이번재료 선택
-    }
 }
