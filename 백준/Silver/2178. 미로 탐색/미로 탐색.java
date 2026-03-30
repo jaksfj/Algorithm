@@ -1,69 +1,65 @@
-import java.io.*;
-import java.util.*;
+
+import java.util.ArrayDeque;
+import java.util.Scanner;
 
 public class Main {
-    static int[][] arr;
-    static boolean[][] visited;
-
-    // 상하좌우를 탐색하기 위한 배열
-    static int[] dx = {-1, 1, 0, 0};
-    static int[] dy = {0,0,-1,1};
-    static int n;
-    static int m;
-
-    public static void main(String[] args) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-        arr = new int[n+1][m+1];
-        visited = new boolean[n+1][m+1];
-
-        for (int i = 1; i <= n; i++) {
-            String line = br.readLine();
-            for (int j = 1; j <= m; j++) {
-                arr[i][j] = Integer.parseInt(line.substring(j-1,j));
-            }
-        }
-
-        int depth = bfs(1,1);
-        System.out.println(depth);
-    }
-
-    private static int bfs(int x,int y){
-        visited[x][y] = true;
-        Queue<Node> queue = new ArrayDeque<>();
-        queue.offer(new Node(x,y,1)); // 초기 깊이는 1
-
-        while(!queue.isEmpty()){
-            Node current = queue.poll();
-
-            if(current.x == n && current.y == m){
-                return current.depth;
-            }
-
-            for (int i = 0; i < 4; i++) {
-                int nextX = current.x + dx[i];
-                int nextY = current.y + dy[i];
-
-                // 탐색한 인덱스가 적절한 범위내인지, 값이 1인지를 확인하고 큐에 저장
-                if(nextX>=1 && nextX<=n && nextY>=1 && nextY<=m && !visited[nextX][nextY] && arr[nextX][nextY]==1){
-                    visited[nextX][nextY] = true;
-                    queue.offer(new Node(nextX,nextY,current.depth+1));
-                }
-            }
-        }
-        return -1; // 도달하지 못하는 경우
-    }
-
-    private static class Node{
-        int x;
-        int y;
-        int depth;
-        Node(int x,int y,int depth){
-            this.x = x;
-            this.y = y;
-            this.depth = depth;
-        }
-    }
+	static int n,m;
+	static int[] dx = {1,-1,0,0};
+	static int[] dy = {0,0,1,-1};
+	static int[][] maze;
+	static int minMove = Integer.MAX_VALUE;
+	// static boolean[][] visited;
+	public static void main(String[] args){
+		Scanner sc = new Scanner(System.in);
+		n = sc.nextInt();
+		m = sc.nextInt();
+		maze = new int[n][m];
+		// visited = new boolean[n][m];
+		sc.nextLine();
+		for(int i=0;i<n;i++) {
+			String line = sc.nextLine();
+			for(int j = 0;j<m;j++) {
+				maze[i][j] = Integer.parseInt(line.substring(j,j+1));
+			}
+		}
+		bfs(0,0);
+		System.out.print(minMove);
+	}
+	
+	static void bfs(int startX,int startY) {
+		ArrayDeque<Site> queue = new ArrayDeque<>();
+		queue.offer(new Site(startX,startY,1));
+		maze[startX][startY] = 0; // 방문 처리
+		// visited[startX][startY] = true;
+		while(!queue.isEmpty()) {
+			Site cur = queue.poll();
+			int x = cur.x;
+			int y = cur.y;
+			int move = cur.move;
+			if(x==(n-1) && y==(m-1)) {
+				minMove = Math.min(minMove,move);
+			}
+			for(int i = 0;i<4;i++) {
+				int lx = x+dx[i];
+				int ly = y+dy[i];
+				if(lx>=0 && ly>=0 && lx<n && ly<m && maze[lx][ly]==1) {
+					// visited[lx][ly] = true;
+					maze[lx][ly] = 0; // 방문 처리
+					queue.offer(new Site(lx,ly,move+1));
+				}
+			}
+		}
+		return;
+	}
+	
+	static class Site{
+		int x;
+		int y;
+		int move;
+		Site(int x,int y,int move){
+			this.x = x;
+			this.y = y;
+			this.move = move;
+		}
+	}
 }
