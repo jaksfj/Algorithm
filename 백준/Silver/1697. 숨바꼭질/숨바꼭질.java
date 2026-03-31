@@ -1,49 +1,57 @@
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayDeque;
+import java.util.StringTokenizer;
 
 public class Main {
-	static int s,e,answer;
-	public static void main(String args[]) {
-		Scanner sc = new Scanner(System.in);
-		s = sc.nextInt();
-		e = sc.nextInt();
-		boolean[] visited = new boolean[100001];
-		bfs(visited,s);
+	static boolean[] visited;
+	static int answer;
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(st.nextToken());
+		int k = Integer.parseInt(st.nextToken());
+		visited = new boolean[100001];
+		bfs(n,k);
 		System.out.print(answer);
 	}
 	
-	static void bfs(boolean[] visited,int start) {
-		ArrayDeque<Integer> queue = new ArrayDeque<>();
-		visited[start] = true;
-		queue.add(start);
-		int[] time = new int[100001];
-		time[start] = 0;
-		
+	static void bfs(int startNode, int endNode) {
+		ArrayDeque<Node> queue = new ArrayDeque<>();
+		queue.offer(new Node(startNode,0));
+		visited[startNode] = true;
 		while(!queue.isEmpty()) {
-			int cur = queue.poll();
-			if(cur==e) {
-				answer = time[cur];
+			Node cur = queue.poll();
+			int pos = cur.pos;
+			int cnt = cur.cnt;
+			if(pos==endNode) {
+				answer = cnt;
 				return;
 			}
-			int n1 = cur+1;
-			int n2 = cur-1;
-			int n3 = cur*2;
-			if(n1<100001 && !visited[n1]) {
-				queue.add(n1);
-				visited[n1] = true;
-				time[n1] = time[cur] + 1;
+			if((pos*2)<=100000 && !visited[pos*2]) {
+				visited[pos*2] = true;
+				queue.offer(new Node(pos*2,cnt+1));
+			}  
+			if((pos+1)<=100000 && !visited[pos+1]) {
+				visited[pos+1] = true;
+				queue.offer(new Node(pos+1,cnt+1));
 			}
-			if(n2>=0 && !visited[n2]) {
-				queue.add(n2);
-				visited[n2] = true;
-				time[n2] = time[cur] + 1;
+			if(pos-1>=0 && !visited[pos-1]) {
+				visited[pos-1] = true;
+				queue.offer(new Node(pos-1,cnt+1));
 			}
-			if(n3<100001 && !visited[n3]) {
-				queue.add(n3);
-				visited[n3] = true;
-				time[n3] = time[cur] + 1;
-			}
+		}
+	}
+	
+	static class Node{
+		int pos;
+		int cnt;
+		
+		Node(int pos, int cnt){
+			this.pos = pos;
+			this.cnt = cnt;
 		}
 	}
 }
