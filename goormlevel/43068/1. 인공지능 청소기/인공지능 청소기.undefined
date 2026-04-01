@@ -1,0 +1,23 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int test_case = Integer.parseInt(br.readLine());
+		for(int t = 0;t<test_case;t++){
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int x = Integer.parseInt(st.nextToken());
+			int y = Integer.parseInt(st.nextToken());
+			int time = Integer.parseInt(st.nextToken());
+			int answer = time-(Math.abs(x)+Math.abs(y));
+			if(answer>0 && answer%2==0){
+				System.out.println("YES");
+			}else if(answer==0){
+				System.out.println("YES");
+			}else{
+				System.out.println("NO");
+			}
+		}
+	}
+}
