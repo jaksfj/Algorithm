@@ -1,0 +1,45 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+		for(int i = 0;i<n;i++){
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int n1 = Integer.parseInt(st.nextToken());
+			int[] arr1 = new int[5];
+			
+			while(st.hasMoreTokens()){
+				int index = Integer.parseInt(st.nextToken());
+				arr1[index]++;
+			}
+			
+			st = new StringTokenizer(br.readLine());
+			int n2 = Integer.parseInt(st.nextToken());
+			int[] arr2 = new int[5];
+			
+			while(st.hasMoreTokens()){
+				int index = Integer.parseInt(st.nextToken());
+				arr2[index]++;
+			}
+
+			boolean isEnd = false;
+			// 값이 존재하는 제일 끝의 인덱스
+			for(int k=4;k>=1;k--){
+				if(arr1[k]>arr2[k]){
+					System.out.println("A");
+					isEnd = true;
+					break;
+				}else if(arr1[k]<arr2[k]){
+					System.out.println("B");
+					isEnd = true;
+					break;
+				}
+			}
+			if(!isEnd){
+				System.out.println("D");
+			}
+		}
+	}
+}
