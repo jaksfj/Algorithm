@@ -1,0 +1,21 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+		String str = br.readLine();
+		char[] charArr = str.toCharArray();
+		for(int i = 0;i<n;i++){
+			if(charArr[i]>='a' && charArr[i]<='z'){
+				charArr[i] -= 32;
+			}else if(charArr[i]>='A' && charArr[i]<='Z'){
+				charArr[i] += 32;
+			}
+		}
+		for(int i = 0;i<n;i++){
+				System.out.print(String.valueOf(charArr[i]));
+		}
+	}
+}
