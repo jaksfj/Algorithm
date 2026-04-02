@@ -1,0 +1,38 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		ArrayList<People> list = new ArrayList<>();
+		
+		for(int i = 1;i<=n;i++){
+			list.add(new People(i,Integer.parseInt(st.nextToken())));
+		}
+		Collections.sort(list);
+		int cnt = 0;
+		for(People p : list){
+			if(cnt==3){
+				break;
+			} 
+			System.out.print(p.number + " ");
+			cnt++;
+		}
+	}
+	
+	static class People implements Comparable<People>{
+		int number;
+		int score;
+		People(int number,int score){
+			this.number = number;
+			this.score = score;
+		}
+
+		@Override
+		public int compareTo(People o){
+			return o.score-this.score;
+		}
+	}
+}
