@@ -1,0 +1,60 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	static int[] dx = {0,0,1,-1};
+	static int[] dy = {1,-1,0,0};
+	static int[][] park;
+	static int n;
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+		n = Integer.parseInt(br.readLine());
+		park = new int[n+1][n+1];
+		
+		for(int i = 1;i<=n;i++){
+			st = new StringTokenizer(br.readLine());
+			for(int j = 1;j<=n;j++){
+				park[i][j] = Integer.parseInt(st.nextToken());
+			}
+		}
+		
+		int cnt = 0;
+		while(!isEnd()){
+			int[][] tmp = new int[n+1][n+1];
+			for(int i = 1;i<=n;i++){
+				for(int j = 1;j<=n;j++){
+					int zeroCnt = 0;
+					for(int k=0;k<4;k++){
+						int lx = i+dx[k];
+						int ly = j+dy[k];
+						if(lx>=1 && lx<=n && ly>=1 && ly<=n && park[lx][ly]==0){ // 동서남북으로 물든 나무들의 개수를 구하기
+							zeroCnt++;
+						}
+						tmp[i][j] = park[i][j]-zeroCnt;
+						if(tmp[i][j]<=0){
+							tmp[i][j] = 0;
+						}
+					}
+				}
+			}
+			cnt++;
+			park = tmp;
+		}
+		System.out.print(cnt);
+	}
+
+	static boolean isEnd(){
+		int sum = 0;
+		for(int i = 1;i<=n;i++){
+			for(int j = 1;j<=n;j++){
+					sum += park[i][j];
+			}
+		}
+		if(sum==0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+}
