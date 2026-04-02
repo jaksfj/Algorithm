@@ -10,18 +10,16 @@ class Main {
 		int cnt = 0;
 		st = new StringTokenizer(br.readLine());
 		for(int i = 0;i<n;i++){
-			String str = st.nextToken();
 			boolean isExist = false;
-			for(int j = 0;j<str.length()-k.length()+1;j++){
-				if(k.equals(str.substring(j,j+k.length()))){
-					isExist = true;
-					break;
-				}
+			String str = st.nextToken();
+			if(str.contains(k)){
+		    isExist = true;
 			}
 			if(!isExist){
 				cnt++;
 			}
 		}
+
 		System.out.print(cnt);
 	}
 }
