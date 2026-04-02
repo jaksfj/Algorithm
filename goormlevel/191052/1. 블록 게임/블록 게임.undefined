@@ -1,0 +1,119 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+		String cmds = br.readLine();
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		ArrayDeque<String> stack = new ArrayDeque<>();
+		ArrayDeque<Integer> score = new ArrayDeque<>();
+		Set<String> set = new HashSet<>();
+		
+		int x = 0;
+		int y = 0;
+		
+		stack.push(0 + " " + 0); // 위치
+		score.push(1); // 점수
+		set.add(0 + " " + 0); // 위치 값들
+		for(int i = 0;i<n;i++){
+			char cmd = cmds.charAt(i);
+			int s = Integer.parseInt(st.nextToken());
+			if(cmd=='R'){
+				y += 1;
+				String loc = x + " " + y;
+				// 1. 충돌 감지
+if(set.contains(loc)) {
+
+    // 2. stack으로 되돌림
+    while (!stack.peek().equals(loc)) {
+        String removed = stack.pop();
+        set.remove(removed);
+        score.pop();
+    }
+
+    // 3. 그 위치는 유지하고 점수만 갱신
+    score.pop();
+    score.push(s);
+
+} else {
+    stack.push(loc);
+    set.add(loc);
+    score.push(s);
+}
+			}else if(cmd=='L'){
+				y -= 1;
+				String loc = x + " " + y;
+				// 1. 충돌 감지
+if(set.contains(loc)) {
+
+    // 2. stack으로 되돌림
+    while (!stack.peek().equals(loc)) {
+        String removed = stack.pop();
+        set.remove(removed);
+        score.pop();
+    }
+
+    // 3. 그 위치는 유지하고 점수만 갱신
+    score.pop();
+    score.push(s);
+
+} else {
+    stack.push(loc);
+    set.add(loc);
+    score.push(s);
+}
+			}else if(cmd=='U'){
+				x += 1;
+				String loc = x + " " + y;
+				// 1. 충돌 감지
+if(set.contains(loc)) {
+
+    // 2. stack으로 되돌림
+    while (!stack.peek().equals(loc)) {
+        String removed = stack.pop();
+        set.remove(removed);
+        score.pop();
+    }
+
+    // 3. 그 위치는 유지하고 점수만 갱신
+    score.pop();
+    score.push(s);
+
+} else {
+    stack.push(loc);
+    set.add(loc);
+    score.push(s);
+}
+			}else if(cmd=='D'){
+				x -= 1;
+				String loc = x + " " + y;
+				// 1. 충돌 감지
+if(set.contains(loc)) {
+
+    // 2. stack으로 되돌림
+    while (!stack.peek().equals(loc)) {
+        String removed = stack.pop();
+        set.remove(removed);
+        score.pop();
+    }
+
+    // 3. 그 위치는 유지하고 점수만 갱신
+    score.pop();
+    score.push(s);
+
+} else {
+    stack.push(loc);
+    set.add(loc);
+    score.push(s);
+}
+			}
+		}
+		long sum = 0;
+		while(!score.isEmpty()){
+			sum += score.pop();
+		}
+		System.out.print(sum);
+	}
+}
