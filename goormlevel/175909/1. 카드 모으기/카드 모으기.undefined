@@ -1,0 +1,32 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(st.nextToken());
+		int m = Integer.parseInt(st.nextToken());
+		boolean[] visited = new boolean[n+1];
+		long sum = 0;
+		for(int i = 1;i<=n;i++){
+			sum += i;
+		}
+		boolean isEnd = false;
+		long tmpSum = 0;
+		for(int i = 1;i<=m;i++){
+			int num = Integer.parseInt(br.readLine());
+			if(!visited[num]){
+				visited[num] = true;
+				tmpSum += num;
+			}
+			if(sum==tmpSum){
+				System.out.print(i);
+				break;
+			}
+		}
+		if(sum!=tmpSum){
+			System.out.print(-1);
+		}
+	}
+}
