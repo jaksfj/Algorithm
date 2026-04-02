@@ -8,10 +8,10 @@ class Main {
 		String str = br.readLine();
 		char[] charArr = str.toCharArray();
 		for(int i = 0;i<n;i++){
-			if(charArr[i]>='a' && charArr[i]<='z'){
-				charArr[i] -= 32;
-			}else if(charArr[i]>='A' && charArr[i]<='Z'){
-				charArr[i] += 32;
+			if(Character.isUpperCase(charArr[i])){
+				charArr[i]=Character.toLowerCase(charArr[i]);
+			}else{
+				charArr[i]=Character.toUpperCase(charArr[i]);
 			}
 		}
 		for(int i = 0;i<n;i++){
