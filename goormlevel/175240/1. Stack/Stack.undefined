@@ -1,0 +1,34 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(st.nextToken());
+		int k = Integer.parseInt(st.nextToken());
+		int[] arr = new int[k];
+		int size = 0;
+		int top = -1;
+		for(int i = 0;i<n;i++){
+			st = new StringTokenizer(br.readLine());
+			String cmd = st.nextToken();
+			if(cmd.equals("pop")){
+				if(top<0){
+					System.out.println("Underflow");
+				}else{
+					System.out.println(arr[top]);
+					top--;
+				}
+				continue;
+			}
+			int num  = Integer.parseInt(st.nextToken());
+			if(top+1==k){
+				System.out.println("Overflow");
+			}else{
+				arr[top+1] = num;
+				top++;
+			}
+		}
+	}
+}
