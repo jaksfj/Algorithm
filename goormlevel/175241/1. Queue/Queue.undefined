@@ -1,0 +1,39 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(st.nextToken());
+		int k = Integer.parseInt(st.nextToken());
+		int[] arr = new int[k];
+		int front = 0;
+		int rear = 0;
+		int zeroCnt = k;
+		for(int i =0;i<n;i++){
+			st = new StringTokenizer(br.readLine());
+			String cmd = st.nextToken();
+			if(cmd.equals("pop")){
+				if(zeroCnt==k){
+					System.out.println("Underflow");
+				}else{
+					System.out.println(arr[rear]);
+					arr[rear] = 0;
+					rear = (rear+1)%k;
+					zeroCnt++;
+				}
+				continue;
+			}
+			int num = Integer.parseInt(st.nextToken());
+			// push
+			if(zeroCnt==0){ // overflow 구현 -> 넣을려고 할 때 배열이 꽉차있으면 발생 : 배열의 인덱스에 모두 수가 존재할 때
+				System.out.println("Overflow");
+			}else{
+				arr[front] = num;
+				front = (front+1)%k;
+				zeroCnt--;
+			}
+		}
+	}
+}
